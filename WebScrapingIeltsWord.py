@@ -1,17 +1,10 @@
 
-# coding: utf-8
-
-# In[28]:
-
 from bs4 import BeautifulSoup
 import pandas as pd
 import requests
 
 
-# In[44]:
-
-
-
+# the main funciton to retrieve the element and change it to dataframe
 def getDataFrameFromSourceText(text):
     soup = BeautifulSoup(text, 'html.parser')
 
@@ -34,11 +27,10 @@ def getDataFrameFromSourceText(text):
     return page_df
 
 
-
-#print(getDataFrameFromSourceText(r.text))
 frames = []
+#The num of pages is 17, so we loop 17 times.
 for x in range(17):
-    #print('processingn '+ (x+1))
+    #change your url site
     urlpath = 'https://www.examword.com/ielts-list/4000-academic-word-{}?la=en'.format(x+1)
     r = requests.get(urlpath)
     df = getDataFrameFromSourceText(r.text)
@@ -46,11 +38,8 @@ for x in range(17):
 
 result = pd.concat(frames)
 result.set_index(["word", "type"])
-result.to_csv('/Users/lawrencewong/Documents/data/ielts_words.csv')
-#print(result)
 
-
-# In[ ]:
-
-
+#output dataframe to csv
+#change your csv file path
+result.to_csv('/Users/yourfilepath/Documents/data/ielts_words.csv')
 
